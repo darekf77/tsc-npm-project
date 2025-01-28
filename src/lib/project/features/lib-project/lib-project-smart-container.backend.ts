@@ -7,7 +7,7 @@ import { Models } from '../../../models';
 import { LibPorjectBase } from './lib-project-base.backend';
 
 import { Project } from '../../abstract/project';
-import { BuildOptions } from '../../../build-options';
+import { BuildOptions } from '../../../options';
 import { clientCodeVersionFolder } from '../../../constants';
 //#endregion
 

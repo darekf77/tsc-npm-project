@@ -12,7 +12,7 @@ import {
 import { Helpers } from 'tnp-helpers/src';
 import { Models } from '../../../../models';
 import { Project } from '../../../abstract/project';
-import { BuildOptions } from '../../../../build-options';
+import { BuildOptions } from '../../../../options';
 //#endregion
 
 export class BackendCompilation extends IncCompiler.Base {

@@ -32,7 +32,12 @@ import {
   frontendFiles,
   notNeededForExportFiles,
 } from 'tnp-config/src';
-import { Helpers, BaseGlobalCommandLine, UtilsNpm } from 'tnp-helpers/src';
+import {
+  Helpers,
+  BaseGlobalCommandLine,
+  UtilsNpm,
+  recognizeImportsFromFile,
+} from 'tnp-helpers/src';
 import { PackagesRecognition } from '../features/package-recognition/packages-recognition';
 import { BrowserCodeCut } from '../compilers/build-isomorphic-lib/code-cut/browser-code-cut.backend';
 import { CLI } from 'tnp-core/src';
@@ -42,6 +47,8 @@ import { MagicRenamer } from 'magic-renamer/src';
 import * as semver from 'semver';
 import { walk } from 'lodash-walk-object/src';
 import { createGenerator, SchemaGenerator } from 'ts-json-schema-generator';
+import { UtilsTerminal } from 'tnp-core/src';
+import { BuildOptions } from '../../options';
 
 declare const ENV: any;
 //#endregion
@@ -1821,6 +1828,65 @@ ${this.project.children
       }),
     );
     this._exit();
+  }
+  //#endregion
+
+  //#region ts testing functions
+  public async ts() {
+    Helpers.clearConsole();
+    await UtilsTerminal.selectActionAndExecute({
+      recognizeImportExportRequire: {
+        name: 'Recognize import/export/require',
+        action: async () => {
+          const files = Helpers.filesFrom([this.cwd, config.folder.src], true);
+          const selectedFileAbsPath = await UtilsTerminal.select({
+            question: 'Select file to recognize imports/exports/requires',
+            choices: files.map(f => {
+              return {
+                name: f,
+                value: f,
+              };
+            }),
+          });
+
+          const importsExports = recognizeImportsFromFile(
+            Helpers.readFile(selectedFileAbsPath),
+          ).map(i => {
+            return `(${i.type}) ${chalk.bold(i.cleanEmbeddedPathToFile)}`;
+          });
+          console.log(importsExports.join('\n '));
+        },
+      },
+    });
+    this._exit();
+  }
+  //#endregion
+
+  //#region electron build
+  public async electronBuild() {
+    await this.project.tryKillAllElectronInstances();
+    await this.project.build(
+      BuildOptions.from({
+        ...this.params,
+        buildType: 'app',
+        targetApp: 'electron',
+        buildForRelease: true,
+        finishCallback: () => this._exit(),
+      }),
+    );
+    this._exit();
+  }
+
+  async electronWatchBuild() {
+    await this.project.tryKillAllElectronInstances();
+    await this.project.build(
+      BuildOptions.from({
+        ...this.params,
+        buildType: 'app',
+        targetApp: 'electron',
+        watch: true,
+      }),
+    );
   }
   //#endregion
 }

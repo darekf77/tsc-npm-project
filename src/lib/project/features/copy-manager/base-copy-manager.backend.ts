@@ -10,7 +10,7 @@ import { CopyMangerHelpers } from './copy-manager-helpers.backend';
 import { IncCompiler } from 'incremental-compiler/src';
 import { Log } from 'ng2-logger/src';
 import { SourceMappingUrl } from './source-maping-url.backend';
-import { BuildOptions } from '../../../build-options';
+import { BuildOptions } from '../../../options';
 import { Helpers } from 'tnp-helpers/src';
 import { TO_REMOVE_TAG } from '../../../constants';
 

@@ -9,7 +9,7 @@ import { config } from 'tnp-config/src';
 import { getLoader } from './loaders/loaders';
 import { imageLoader as getImageLoaderHtml } from './loaders/image-loader';
 import { Models } from '../../../../models';
-import { InitOptions } from '../../../../build-options';
+import { InitOptions } from '../../../../options';
 //#endregion
 
 export class InsideStructAngular13App extends BaseInsideStruct {

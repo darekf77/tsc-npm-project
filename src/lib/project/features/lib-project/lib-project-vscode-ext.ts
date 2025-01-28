@@ -3,7 +3,7 @@ import { crossPlatformPath, fse, path, _, chalk } from 'tnp-core/src';
 import { BaseFeatureForProject, Helpers } from 'tnp-helpers/src';
 import { Project } from '../../abstract/project';
 import { Models } from '../../../models';
-import { BuildOptions, ReleaseOptions } from '../../../build-options';
+import { BuildOptions, ReleaseOptions } from '../../../options';
 
 export class LibProjectVscodeExt extends BaseFeatureForProject<Project> {
   public get extensionVsixName() {

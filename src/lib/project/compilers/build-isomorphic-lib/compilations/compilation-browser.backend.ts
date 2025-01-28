@@ -11,7 +11,7 @@ import { IncCompiler } from 'incremental-compiler/src';
 import { config } from 'tnp-config/src';
 import { Helpers } from 'tnp-helpers/src';
 import { BackendCompilation } from './compilation-backend.backend';
-import { BuildOptions } from '../../../../build-options';
+import { BuildOptions } from '../../../../options';
 import { Project } from '../../../abstract/project';
 import { JSON10 } from 'json10/src';
 import { CodeCut } from '../code-cut/code-cut.backend';

@@ -3,7 +3,7 @@ import { chalk, path } from 'tnp-core/src';
 import { Helpers } from 'tnp-helpers/src';
 import { EXPORT_TEMPLATE } from '../../templates';
 import { BaseFeatureForProject } from 'tnp-helpers/src';
-import { BuildOptions } from '../../build-options';
+import { BuildOptions } from '../../options';
 import { Project } from '../abstract/project';
 
 export interface WebpackBackendCompilationOpt {

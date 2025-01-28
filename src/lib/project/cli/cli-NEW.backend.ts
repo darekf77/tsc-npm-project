@@ -10,7 +10,7 @@ import {
 import { Helpers } from 'tnp-helpers/src';
 import { BaseCommandLineFeature } from 'tnp-helpers/src';
 import { Project } from '../abstract/project';
-import { BuildOptions, InitOptions, NewOptions } from '../../build-options';
+import { BuildOptions, InitOptions, NewOptions } from '../../options';
 import { MESSAGES, TEMP_DOCS, notAllowedProjectNames } from '../../constants';
 import { Models } from '../../models';
 import { config } from 'tnp-config/src';

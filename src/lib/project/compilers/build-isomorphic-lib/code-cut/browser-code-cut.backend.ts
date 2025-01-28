@@ -16,7 +16,7 @@ import {
 } from 'tnp-config/src';
 import { Helpers } from 'tnp-helpers/src';
 import type { Project } from '../../../abstract/project';
-import { BuildOptions, InitOptions } from '../../../../build-options';
+import { BuildOptions, InitOptions } from '../../../../options';
 import { Models } from '../../../../models';
 import { RegionRemover } from 'isomorphic-region-loader/src';
 import { MjsModule } from '../../../features/copy-manager/mjs-fesm-module-spliter.backend';

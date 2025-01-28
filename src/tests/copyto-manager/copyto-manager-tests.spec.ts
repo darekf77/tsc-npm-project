@@ -11,7 +11,7 @@
 // import { Helpers } from 'tnp-helpers/src';
 // import { ProjectIsomorphicLib } from '../../lib/project/abstract/project';
 // import { ProjectContainer } from '../../lib/project/abstract/project';
-// import { BuildOptions } from '../../lib/build-options';
+// import { BuildOptions } from '../../lib/options';
 // import { PackageJSON } from '../../lib/project/features/package-json/package-json';
 // import { dummyfiles } from './copyto-manager-dummy-files';
 // import { ProjectUnknowNpm } from '../../lib/project/abstract/project';

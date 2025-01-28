@@ -1,6 +1,6 @@
 import { Taon } from 'taon/src';
 import { _ } from 'tnp-core/src';
-import { BuildOptions } from '../../../build-options';
+import { BuildOptions } from '../../../options';
 import { TaonBuild } from './taon-build.entity';
 
 //#region port entity

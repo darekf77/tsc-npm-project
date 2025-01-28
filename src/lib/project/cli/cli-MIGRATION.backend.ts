@@ -11,7 +11,7 @@ import {
 import { Helpers, UtilsTypescript } from 'tnp-helpers/src';
 import { BaseCommandLineFeature } from 'tnp-helpers/src';
 import { Project } from '../abstract/project';
-import { BuildOptions, ReleaseOptions } from '../../build-options';
+import { BuildOptions, ReleaseOptions } from '../../options';
 import { config } from 'tnp-config/src';
 //#endregion
 

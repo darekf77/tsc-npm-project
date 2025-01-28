@@ -10,7 +10,7 @@ import { Models } from '../../../models';
 import { Helpers } from 'tnp-helpers/src';
 import { config } from 'tnp-config/src';
 import { BaseFeatureForProject } from 'tnp-helpers/src';
-import { InitOptions } from '../../../build-options';
+import { InitOptions } from '../../../options';
 import { Utils } from 'tnp-core/src';
 import { frameworkBuildFolders } from '../../../constants';
 

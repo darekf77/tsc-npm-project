@@ -1,7 +1,7 @@
 //#region imports
 import { config, PREFIXES } from 'tnp-config/src';
 import { crossPlatformPath, fse, path, _ } from 'tnp-core/src';
-import { BuildOptions } from '../../../../build-options';
+import { BuildOptions } from '../../../../options';
 import type { Project } from '../../../abstract/project';
 import { BrowserCodeCut } from './browser-code-cut.backend';
 import { extAllowedToReplace } from 'tnp-config/src';

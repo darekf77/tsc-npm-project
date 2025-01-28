@@ -3,7 +3,7 @@ import { _ } from 'tnp-core/src';
 import { Helpers } from 'tnp-helpers/src';
 import { BaseCommandLineFeature } from 'tnp-helpers/src';
 import { Project } from '../abstract/project';
-import { BuildOptions } from '../../build-options';
+import { BuildOptions } from '../../options';
 import { TEMP_DOCS } from '../../constants';
 import { config } from 'tnp-config/src';
 

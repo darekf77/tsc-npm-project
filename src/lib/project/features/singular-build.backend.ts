@@ -12,7 +12,7 @@ import {
 } from 'incremental-compiler/src';
 import { recreateApp } from './inside-structures/structs/inside-struct-helpers';
 import { BaseFeatureForProject } from 'tnp-helpers/src';
-import { InitOptions } from '../../build-options';
+import { InitOptions } from '../../options';
 
 //#endregion
 

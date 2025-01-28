@@ -1,6 +1,6 @@
 import { config, PREFIXES } from 'tnp-config/src';
 import { crossPlatformPath, glob, path, _ } from 'tnp-core/src';
-import { BuildOptions } from '../../../build-options';
+import { BuildOptions } from '../../../options';
 import { Helpers } from 'tnp-helpers/src';
 import { argsToClear } from '../../../constants';
 import { Models } from '../../../models';

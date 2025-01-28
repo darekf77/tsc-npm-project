@@ -1,4 +1,4 @@
-import { BuildOptions, InitOptions } from '../../../../build-options';
+import { BuildOptions, InitOptions } from '../../../../options';
 import { Project } from '../../../abstract/project';
 import { InsideStruct } from '../inside-struct';
 

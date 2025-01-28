@@ -10,7 +10,7 @@
     "projects": [
       {
         "packageNameWithPath": [
-          "tnp/COMMANDS.md",
+          "tnp/docs/COMMANDS.md",
           "tnp-helpers/GIT-COMMANDS.md",
         ],
         "overrideTitle": "ALL_COMMANDS",
@@ -24,8 +24,7 @@
   "omitFilesPatters": [
     "BUILD-INFO.md",
     "README.md",
-    "GIT-COMMANDS",
-    "COMMANDS.md",
+    "GIT-COMMANDS"
   ],
   "priorityOrder": ["Start"],
   "mapTitlesNames": {

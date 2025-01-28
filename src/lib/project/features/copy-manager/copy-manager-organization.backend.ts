@@ -1,6 +1,6 @@
 import { config } from 'tnp-config/src';
 import { crossPlatformPath, glob, path, _ } from 'tnp-core/src';
-import { BuildOptions } from '../../../build-options';
+import { BuildOptions } from '../../../options';
 import { Helpers } from 'tnp-helpers/src';
 import { Project } from '../../abstract/project';
 import { CopyMangerHelpers } from './copy-manager-helpers.backend';

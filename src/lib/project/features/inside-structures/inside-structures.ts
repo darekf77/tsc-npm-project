@@ -9,7 +9,7 @@ import { Project } from '../../abstract/project';
 import { InsideStructureData } from './inside-struct';
 import { InsideStructAngular13App, InsideStructAngular13Lib } from './structs';
 import { BaseInsideStruct } from './structs/base-inside-struct';
-import { InitOptions } from '../../../build-options';
+import { InitOptions } from '../../../options';
 
 export class InsideStructures extends BaseFeatureForProject<Project> {
   //#region field & getters

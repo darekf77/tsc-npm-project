@@ -1,6 +1,6 @@
 import { BaseFeatureForProject, Helpers } from 'tnp-helpers/src';
 import type { Project } from '../abstract/project';
-import { InitOptions } from '../../../lib/build-options';
+import { InitOptions } from '../../../lib/options';
 
 /**
  * Base href can be:

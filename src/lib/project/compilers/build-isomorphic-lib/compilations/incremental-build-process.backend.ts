@@ -5,7 +5,7 @@ import { _ } from 'tnp-core/src';
 import { config } from 'tnp-config/src';
 import type { Project } from '../../../../project/abstract/project';
 import { Helpers } from 'tnp-helpers/src';
-import { BuildOptions } from '../../../../build-options';
+import { BuildOptions } from '../../../../options';
 import { BackendCompilation } from './compilation-backend.backend';
 import { BroswerCompilation } from './compilation-browser.backend';
 import { IncCompiler } from 'incremental-compiler/src';

@@ -54,10 +54,11 @@ import {
   BaseProjectResolver,
   BaseProject,
   UtilsQuickFixes,
+  BaseReleaseProcess,
 } from 'tnp-helpers/src';
 import { LibTypeArr } from 'tnp-config/src';
 import { CoreConfig } from 'tnp-core/src';
-import { BuildOptions, InitOptions, ReleaseOptions } from '../../build-options';
+import { BuildOptions, InitOptions, ReleaseOptions } from '../../options';
 import { Models } from '../../models';
 import {
   MESSAGES,
@@ -71,13 +72,13 @@ import { AngularFeBasenameManager } from '../features/basename-manager';
 import { LibraryBuild } from './library-build';
 import { NpmHelpers } from './npm-helpers';
 import { LinkedProjects } from './linked-projects';
-import { BaseLocalRelease } from './base-local-release';
 import { Git } from './git';
 import { Docs } from './docs';
 import { Vscode } from './vscode';
 import { QuickFixes } from './quick-fixes';
 import { TaonProjectsWorker } from './taon-worker/taon.worker';
 import { MigrationHelper } from './migrations-helper';
+import type { ReleaseProcess } from './release-process';
 //#endregion
 
 export class TaonProjectResolve extends BaseProjectResolver<Project> {
@@ -771,10 +772,11 @@ export class Project extends BaseProject<Project, CoreModels.LibType> {
   private __forStandAloneSrc: string = `${config.folder.src}-for-standalone`;
   private __npmRunNg: string = `npm-run ng`; // when there is not globl "ng" command -> npm-run ng.js works
   public angularFeBasenameManager: AngularFeBasenameManager;
-  public localRelease: BaseLocalRelease;
+
   public docs: Docs;
   public vsCodeHelpers: Vscode;
   public migrationHelper: MigrationHelper;
+  public releaseProcess?: ReleaseProcess;
 
   //#region @backend
   public __libStandalone: LibProjectStandalone;
@@ -834,12 +836,12 @@ export class Project extends BaseProject<Project, CoreModels.LibType> {
     this.linkedProjects = new (require('./linked-projects')
       .LinkedProjects as typeof LinkedProjects)(this as any);
 
-    this.localRelease = new (require('./base-local-release')
-      .BaseLocalRelease as typeof BaseLocalRelease)(this as any);
-
     this.vsCodeHelpers = new (require('./vscode').Vscode as typeof Vscode)(
       this as any,
     );
+
+    this.releaseProcess = new (require('./release-process')
+      .ReleaseProcess as typeof ReleaseProcess)(this as any, void 0);
 
     if (!global.codePurposeBrowser) {
       // TODO when on weird on node 12
@@ -5158,7 +5160,7 @@ ${config.frameworkName} start
   //#endregion
 
   //#region getters & methods / get version for
-  getVersionFor(releaseType: CoreModels.ReleaseType): string {
+  getVersionFor(releaseType: CoreModels.ReleaseVersionType): string {
     //#region @backendFunc
     if (releaseType === 'patch') {
       return this.__versionPatchedPlusOne;

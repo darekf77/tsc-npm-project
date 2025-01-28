@@ -7,7 +7,7 @@ import { LibPorjectBase } from './lib-project-base.backend';
 import { Project } from '../../abstract/project';
 import { Models } from '../../../models';
 import { TEMP_DOCS, clientCodeVersionFolder } from '../../../constants';
-import { BuildOptions } from '../../../build-options';
+import { BuildOptions } from '../../../options';
 //#endregion
 
 export class LibProjectStandalone extends LibPorjectBase {
