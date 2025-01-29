@@ -41,7 +41,7 @@ export class ReleaseProcess extends BaseReleaseProcess<Project> {
         `);
       //#endregion
 
-      if (this.project.children.length === 0) {
+      if (this.project.__isContainer && this.project.children.length === 0) {
         console.info(
           `No projects to release inside ${chalk.bold(this.project.genericName)} container`,
         );

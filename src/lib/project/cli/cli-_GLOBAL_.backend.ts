@@ -1705,6 +1705,18 @@ ${this.project.children
   }
   //#endregion
 
+  killZs() {
+    this.killZscaller();
+  }
+
+  killZscaller() {
+    Helpers.run('sudo killall -9 Zscaler ZscalerTunnel ZscalerAppServices', {
+      // stdio that will let me pass password in child process
+      stdio: 'inherit',
+    }).sync();
+    this._exit();
+  }
+
   //#region not for npm / get trusted
   //#region @notForNpm
   getJsonCAttrs() {
