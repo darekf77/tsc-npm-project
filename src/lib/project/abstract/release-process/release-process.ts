@@ -4,16 +4,17 @@ import { Helpers, translate } from 'tnp-helpers/src';
 //#endregion
 import { BaseReleaseProcess } from 'tnp-helpers/src';
 import { Project } from '../project';
-import { chalk, CoreModels, UtilsTerminal } from 'tnp-core/src';
+import { chalk, CoreModels, UtilsTerminal, _ } from 'tnp-core/src';
 import { config } from 'tnp-config/src';
 //#endregion
 
 export class ReleaseProcess extends BaseReleaseProcess<Project> {
   project: Project;
+  selectedProjects: Project[] = [this.project];
 
   constructor(
     project: Project,
-    private releaseProcessType: CoreModels.ReleaseProcessType,
+    protected releaseProcessType: CoreModels.ReleaseProcessType,
   ) {
     super(project);
   }
@@ -23,7 +24,7 @@ export class ReleaseProcess extends BaseReleaseProcess<Project> {
     //#region @backend
     while (true) {
       UtilsTerminal.clearConsole();
-      const isContainer = this.project.__isContainer;
+      //#region info
       console.info(`
         ${chalk.bold.yellow('Manual release')} => for everything whats Taon supports (npm, docker, git, etc)
         - everything is done here manually, you have to provide options
@@ -38,10 +39,23 @@ export class ReleaseProcess extends BaseReleaseProcess<Project> {
           ( if you need a backup them inside your git repository )
 
         `);
-      await UtilsTerminal.selectActionAndExecute(
+      //#endregion
+
+      if (this.project.children.length === 0) {
+        console.info(
+          `No projects to release inside ${chalk.bold(this.project.genericName)} container`,
+        );
+        await UtilsTerminal.pressAnyKeyToContinueAsync({
+          message: 'Press any key to exit...',
+        });
+        return;
+      }
+
+      const { actionResult } = await UtilsTerminal.selectActionAndExecute(
         {
           ['manual' as CoreModels.ReleaseProcessType]: {
-            name: `${chalk.bold.yellow('Manual')} release`,
+            //#region manual
+            name: `${this.getColoredTextItem('manual')} release`,
             action: async () => {
               const { ReleaseProcessManual } = await import(
                 './release-process-manual'
@@ -50,24 +64,34 @@ export class ReleaseProcess extends BaseReleaseProcess<Project> {
                 this.project,
                 'manual',
               );
-              await releaseProcess.displayReleaseProcessMenu();
+              return await releaseProcess.displayArtifactsMenu();
             },
+            //#endregion
           },
           ['cloud' as CoreModels.ReleaseProcessType]: {
-            name: `${chalk.bold.green('Cloud')} release`,
+            //#region cloud
+            name: `${this.getColoredTextItem('cloud')} release`,
             action: async () => {
-              const { ReleaseProcessCloud } = await import(
-                './release-process-cloud'
-              );
-              const releaseProcess = new ReleaseProcessCloud(
-                this.project,
-                'cloud',
-              );
-              await releaseProcess.displayReleaseProcessMenu();
+              //TODO
+              await UtilsTerminal.pressAnyKeyToContinueAsync({
+                message: 'NOT IMPLEMENTED YET.. Press any key to go back...',
+              });
+              return;
+
+              // const { ReleaseProcessCloud } = await import(
+              //   './release-process-cloud'
+              // );
+              // const releaseProcess = new ReleaseProcessCloud(
+              //   this.project,
+              //   'cloud',
+              // );
+              // return await releaseProcess.displayArtifactsMenu();
             },
+            //#endregion
           },
           ['local' as CoreModels.ReleaseProcessType]: {
-            name: `${chalk.bold.gray('Local')} release`,
+            //#region local
+            name: `${this.getColoredTextItem('local')} release`,
             action: async () => {
               const { ReleaseProcessLocal } = await import(
                 './release-process-local'
@@ -76,8 +100,9 @@ export class ReleaseProcess extends BaseReleaseProcess<Project> {
                 this.project,
                 'local',
               );
-              await releaseProcess.displayReleaseProcessMenu();
+              return await releaseProcess.displayArtifactsMenu();
             },
+            //#endregion
           },
         },
         {
@@ -87,6 +112,119 @@ export class ReleaseProcess extends BaseReleaseProcess<Project> {
             `${this.project.__isContainer ? 'container' : 'standalone'} project ?`,
         },
       );
+      // if (actionResult === 'break') {
+      //   return;
+      // }
+    }
+    //#endregion
+  }
+  //#endregion
+
+  //#region display projects selection menu
+  async displayProjectsSelectionMenu() {
+    //#region @backend
+    while (true) {
+      UtilsTerminal.clearConsole();
+      this.displayReleaseHeader();
+      const choices = this.project.children.map(c => {
+        return {
+          name: c.genericName,
+          value: c.location,
+        };
+      });
+
+      const selectAll = await UtilsTerminal.confirm({
+        message: `Use all ${this.project.children.length} children projects in release process ?`,
+      });
+
+      if (selectAll) {
+        this.selectedProjects = this.project.children;
+        return;
+      }
+
+      const selectedLocations = await UtilsTerminal.multiselect({
+        choices,
+        question: `Select projects to release in ${this.project.genericName} container ?`,
+      });
+      if (selectedLocations.length > 0) {
+        this.selectedProjects = selectedLocations.map(location =>
+          Project.ins.From(location),
+        );
+        return;
+      }
+    }
+    //#endregion
+  }
+  //#endregion
+
+  //#region display release header
+  displayReleaseHeader() {
+    console.info(
+      `
+
+      ${this.getColoredTextItem(this.releaseProcessType)}` +
+        ` release of ${chalk.bold(this.project.genericName)}
+
+      `,
+    );
+  }
+  //#endregion
+
+  //#region get colored text item
+  getColoredTextItem(releaseProcessType: CoreModels.ReleaseProcessType) {
+    //#region @backend
+    if (releaseProcessType === 'manual') {
+      return _.upperFirst(chalk.bold.yellow('Manual'));
+    }
+    if (releaseProcessType === 'cloud') {
+      return _.upperFirst(chalk.bold.green('Cloud'));
+    }
+    if (releaseProcessType === 'local') {
+      return _.upperFirst(chalk.bold.gray('Local'));
+    }
+    //#endregion
+  }
+  //#endregion
+
+  //#region display artifacts menu
+  async displayArtifactsMenu() {
+    //#region @backend
+    if (this.project.__isContainer) {
+      await this.displayProjectsSelectionMenu();
+    }
+    while (true) {
+      UtilsTerminal.clearConsole();
+      this.displayReleaseHeader();
+      const choices = CoreModels.ReleaseArtifactsArr.reduce((acc, curr) => {
+        return _.merge(acc, {
+          [curr]: {
+            name: `${_.upperFirst(_.startCase(curr))} release`,
+            action: async () => {
+              await this.startRelease({
+                processType: this.releaseProcessType,
+                automaticRelease: false,
+              });
+            },
+          },
+        });
+      }, {});
+
+      const { selected } = await UtilsTerminal.multiselectActionAndExecute(
+        choices,
+        {
+          autocomplete: false,
+          question:
+            `Select release artifacts for this ` +
+            `${
+              this.project.__isContainer
+                ? `container's ${this.selectedProjects.length} projects`
+                : 'standalone project'
+            } ?`,
+        },
+      );
+      if (!selected || selected.length === 0) {
+        return;
+      }
     }
     //#endregion
   }

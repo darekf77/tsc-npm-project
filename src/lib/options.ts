@@ -203,6 +203,9 @@ export class BuildOptions extends BuildOptionsLibOrApp<BuildOptions> {
 //#endregion
 
 //#region release options
+/**
+ * @deprecated
+ */
 export class ReleaseOptions extends BuildOptionsLibOrApp<ReleaseOptions> {
   private constructor() {
     super();
