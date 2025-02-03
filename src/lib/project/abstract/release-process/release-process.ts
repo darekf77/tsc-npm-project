@@ -5,8 +5,6 @@ import { Helpers, translate } from 'tnp-helpers/src';
 import { BaseReleaseProcess } from 'tnp-helpers/src';
 import { Project } from '../project';
 import { chalk, CoreModels, UtilsTerminal, _ } from 'tnp-core/src';
-import { config } from 'tnp-config/src';
-import { ArtifactRelease } from './artifacts/artifact-release';
 //#endregion
 
 /**
